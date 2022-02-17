@@ -3,8 +3,7 @@ const artifact = require('@actions/artifact');
 
 const artifactClient = artifact.create();
 
-
-module.exports.run = async function () {
+async function run() {
     try {
         const useCoverageReport = core.getInput('use-coverage-report') === 'true';
         const coverageArtifactPath = core.getInput('coverage-artifact-path');
@@ -36,3 +35,5 @@ module.exports.run = async function () {
         core.setFailed(err.message);
     }
 }
+
+run();
