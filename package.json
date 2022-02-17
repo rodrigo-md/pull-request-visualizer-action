@@ -1,0 +1,12 @@
+{
+  "name": "pull-request-visualizer-action",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:rodrigo-md/pull-request-visualizer-action.git",
+  "author": "Rodrigo Martinez <rodrigo.martinez.diaz@autodesk.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/artifact": "^0.6.1",
+    "@actions/core": "^1.6.0"
+  }
+}
