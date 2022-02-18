@@ -1,7 +1,17 @@
+const fs = require('fs');
+const { readFile } = require("fs/promises");
 const core = require('@actions/core');
 const artifact = require('@actions/artifact');
 
 const artifactClient = artifact.create();
+
+async function retrieveFile(path, artifactName) {
+    if(fs.existsSync(path)) {
+        return readFile(path, { encoding: 'utf8' });
+    }
+
+    return artifactClient.downloadArtifact(artifactName, path);
+}
 
 async function run() {
     try {
@@ -25,7 +35,7 @@ async function run() {
                 throw new Error('Coverage artifact name not specified');
             }
 
-            const downloadResponse  = await artifactClient.downloadArtifact(coverageArtifactName, coverageArtifactPath);
+            const downloadResponse  = await retrieveFile(coverageArtifactPath, coverageArtifactName);
 
             core.info('Coverage report file retrieved successfully');
 
