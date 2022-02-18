@@ -4,7 +4,7 @@ const { getDiffFiles } = require('./diff');
 async function run() {
     try {
         const sourceBranch = core.getInput('source-branch');
-        const targetBranch = core.getInput('targe-branch');
+        const targetBranch = core.getInput('target-branch');
 
         core.info(`source-branch: ${sourceBranch}`);
         core.info(`target-branch: ${targetBranch}`);
