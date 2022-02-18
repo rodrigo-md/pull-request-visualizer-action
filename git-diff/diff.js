@@ -19,7 +19,7 @@ async function execute(command) {
 // Return the list of modified|created|deleted files according to git, between
 // the `base` commit and the `HEAD`
 module.exports.getDiffFiles = async function (source, target) {
-  const stdout = await execute(`git diff --name-status --no-renames ${target}...${source}`);
+  const stdout = await execute(`git fetch origin ${target} ${source} && git diff --name-status --no-renames origin/${target}...origin/${source}`);
   const files = stdout.split('\n').map(getDiffFile).filter(Boolean)
 
   const modified = getFilesByType(files, 'M')
