@@ -1,0 +1,6 @@
+
+[build]
+    base = ".pr-site/"
+
+[context.deploy-preview]
+    publish = "publish/"
