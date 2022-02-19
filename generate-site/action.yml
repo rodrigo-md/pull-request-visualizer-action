@@ -9,7 +9,7 @@ inputs:
     description: Milliseconds to simulate the time spent building the website
     required: true
   base-directory:
-    description: Base directory
+    description: It should be the workspace directory used when running the actions
     required: true 
 runs:
   using: 'node16'
