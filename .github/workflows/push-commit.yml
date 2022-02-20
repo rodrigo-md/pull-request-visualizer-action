@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: clean actions builded locally
+        run: yarn workspaces foreach -t run build:clean
       - name: build scripts
         run: yarn workspaces foreach -pt run build
       - uses: stefanzweifel/git-auto-commit-action@v4
