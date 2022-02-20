@@ -1,0 +1,41 @@
+name: Pull request visualizer action
+description: Generate and deploy an interactive website to compare visually both branches in a PR
+author: Rodrigo Martinez Diaz
+inputs:
+  netlify_token:
+    description: netlify token
+    required: true
+  netlify_site_id:
+    description: APP ID for the site associate with the repository usign this action
+    required: true
+  
+runs:
+  using: composite
+  steps:
+    - uses: rodrigo-md/pull-request-visualizer-action/packages/coverage-report@testing-action
+      with:
+        use-coverage-report: false
+    - id: diff
+      uses: rodrigo-md/pull-request-visualizer-action/packages/git-diff@testing-action
+      with:
+        source-branch: ${{ github.head_ref }}
+        target-branch: ${{ github.base_ref }}
+    - run: echo '${{ toJson(steps.diff.outputs.diff-summary) }}'
+      shell: bash
+    - uses: rodrigo-md/pull-request-visualizer-action/packages/generate-site@testing-action
+      with:
+        commit-hash: ${{github.event.pull_request.head.sha }}
+        wait: 5000
+        base-directory: ${{ github.workspace }}
+    - id: netlify-deployment
+      uses: jsmrcaga/action-netlify-deploy@v1.7.2
+      with:
+        NETLIFY_AUTH_TOKEN: ${{ inputs.netlify_token }}
+        NETLIFY_SITE_ID: ${{ inputs.netlify_site_id }}
+        build_directory: .pr-site/publish
+        build_command: echo building...
+        deploy_alias: pull-request-visualizer-${{ github.event.number }}
+    - uses: rodrigo-md/pull-request-visualizer-action/packages/notify-deployment@testing-action
+      with:
+        website-url: ${{ steps.netlify-deployment.outputs.NETLIFY_PREVIEW_URL }}
+        GITHUB_TOKEN: ${{ github.token }}

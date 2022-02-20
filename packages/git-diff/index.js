@@ -9,8 +9,6 @@ async function run() {
         core.info(`source-branch: ${sourceBranch}`);
         core.info(`target-branch: ${targetBranch}`);
 
-        core.info('process.env', process.env);
-
         const diff = await getDiffFiles(sourceBranch, targetBranch);
 
         core.setOutput('diff-summary', JSON.stringify(diff));

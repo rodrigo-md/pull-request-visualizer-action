@@ -1,6 +1,6 @@
-name: Pull Request Visualizer
+name: Covera report
 author: Rodrigo Martinez Diaz
-description: Generate an static site for visualize and analyze the PR changes with the target branch
+description: Retrieve the code coverage results to compute other metrics
 inputs:
   use-coverage-report:
     description: Indicates if it should use the previously computed coverage report
